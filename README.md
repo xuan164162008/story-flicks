@@ -17,8 +17,8 @@ The backend technology stack consists of Python + FastAPI framework, while the f
 </thead>
 <tbody>
 <tr>
-<td align="center"><video src="./backend/examples/video/狼和小白兔.mp4"></video></td>
-<td align="center"><video src="./backend/examples/video/兔子和小狐狸.mp4"></video></td>
+<td align="center"><video src="https://raw.githubusercontent.com/alecm20/story-flicks/refs/heads/main/backend/examples/video/%E7%8B%BC%E5%92%8C%E5%B0%8F%E7%99%BD%E5%85%94.mp4"></video></td>
+<td align="center"><video src="https://raw.githubusercontent.com/alecm20/story-flicks/refs/heads/main/backend/examples/video/%E5%85%94%E5%AD%90%E5%92%8C%E5%B0%8F%E7%8B%90%E7%8B%B8.mp4"></video></td>
 </tr>
 </tbody>
 </table>
