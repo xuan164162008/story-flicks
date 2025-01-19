@@ -1,0 +1,6 @@
+.videoContainer {
+    margin-left: 20px;
+}
+.videoEl {
+    width: calc(100vw - 800px);
+}
