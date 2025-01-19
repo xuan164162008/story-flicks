@@ -20,8 +20,8 @@
 </thead>
 <tbody>
 <tr>
-<td align="center"><video src="https://raw.githubusercontent.com/alecm20/story-flicks/refs/heads/main/backend/examples/video/%E7%8B%BC%E5%92%8C%E5%B0%8F%E7%99%BD%E5%85%94.mp4"></video></td>
-<td align="center"><video src="https://raw.githubusercontent.com/alecm20/story-flicks/refs/heads/main/backend/examples/video/%E5%85%94%E5%AD%90%E5%92%8C%E5%B0%8F%E7%8B%90%E7%8B%B8.mp4"></video></td>
+<td align="center"><video src="https://github.com/user-attachments/assets/8868e1b5-a931-4d25-9762-859a4c32d4f4"></video></td>
+<td align="center"><video src="https://github.com/user-attachments/assets/4585c59c-966a-40c7-97d0-505fbe00cf4f"></video></td>
 </tr>
 </tbody>
 </table>
