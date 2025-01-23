@@ -42,16 +42,19 @@ git clone https://github.com/alecm20/story-flicks.git
 cp .env.example .env
 
 
-text_provider="openai"    # Text generation model provider, currently only supports openai and aliyun. Aliyun documentation: https://www.aliyun.com/product/bailian
+text_provider="openai"    # The text generation model provider. Currently supports openai, aliyun, and deepseek. 
+                          # Aliyun documentation: https://www.aliyun.com/product/bailian
+                          
+image_provider="aliyun"   # The image generation model provider. Currently, only openai and aliyun are supported.
 
-image_provider="aliyun"   # Image generation model provider, currently only supports openai and aliyun
+openai_base_url="https://api.openai.com/v1" # The base URL for OpenAI
+aliyun_base_url="https://dashscope.aliyuncs.com/compatible-mode/v1" # The base URL for Aliyun
+deepseek_base_url="https://api.deepseek.com/v1" # The base URL for DeepSeek
 
-openai_base_url="https://api.openai.com/v1" # Base URL for OpenAI
+openai_api_key= # The API key for OpenAI, only one key needs to be provided
+aliyun_api_key= # The API key for Aliyun Bailian, only one key needs to be provided
+deepseek_api_key= # The API key for DeepSeek, only one key needs to be provided
 
-aliyun_base_url="https://dashscope.aliyuncs.com/compatible-mode/v1" # Base URL for Aliyun
-
-openai_api_key= # OpenAI API key (you can provide either one)
-aliyun_api_key= # Aliyun API key (you can provide either one)
 
 text_llm_model=gpt-4o # If text_provider is set to openai, only OpenAI models can be used, such as gpt-4o. If aliyun is selected, Aliyun models like qwen-plus or qwen-max can be used.
 

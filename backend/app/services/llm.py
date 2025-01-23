@@ -18,10 +18,6 @@ from app.schemas.llm import (
 )
 settings = get_settings()
 
-# print("image_llm_api_key", settings.image_llm_api_key)
-# print("image_base_url", settings.image_base_url)
-# print("text_llm_model", settings.text_llm_model)
-# print("image_llm_model", settings.image_llm_model)
 
 openai_client = None
 if settings.openai_api_key:
@@ -30,6 +26,9 @@ aliyun_text_client = None
 if settings.aliyun_api_key:
     dashscope.api_key = settings.aliyun_api_key
     aliyun_text_client = OpenAI(base_url=settings.aliyun_base_url or "https://dashscope.aliyuncs.com/compatible-mode/v1", api_key=settings.aliyun_api_key) 
+if settings.deepseek_api_key:
+    deepseek_client = OpenAI(api_key=settings.deepseek_api_key, base_url=settings.deepseek_base_url or "https://api.deepseek.com/v1")
+
 
 class LLMService:
     def __init__(self):
@@ -163,6 +162,8 @@ class LLMService:
         if settings.aliyun_api_key:
             textLLMList.append("aliyun")
             imgLLMList.append("aliyun")
+        if settings.deepseek_api_key:
+            textLLMList.append("deepseek")
         return { "textLLMProviders": textLLMList, "imageLLMProviders": imgLLMList }
 
     def _validate_story_response(self, response: any) -> None:
@@ -212,6 +213,8 @@ class LLMService:
             text_client = self.aliyun_text_client
         elif text_llm_provider == "openai":
             text_client = self.openai_client
+        elif text_llm_provider == "deepseek":
+            text_client = deepseek_client
         if text_llm_model == None:
             text_llm_model = settings.text_llm_model
         response = text_client.chat.completions.create(

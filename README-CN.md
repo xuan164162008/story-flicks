@@ -46,14 +46,16 @@ git clone https://github.com/alecm20/story-flicks.git
 cp .env.example .env
 
 
-text_provider="openai"    # 文本生成模型的提供商，目前暂时只支持 openai和 aliyun，阿里云文档：https://www.aliyun.com/product/bailian
-image_provider="aliyun"   # 图片生成模型的提供商，目前暂时只支持 openai和 aliyun
+text_provider="openai"    # 文本生成模型的提供商，目前支持 openai和 aliyun、deepseek，阿里云文档：https://www.aliyun.com/product/bailian
+image_provider="aliyun"   # 图片生成模型的提供商，目前只支持 openai和 aliyun
 
 openai_base_url="https://api.openai.com/v1" # openai 的 baseUrl
 aliyun_base_url="https://dashscope.aliyuncs.com/compatible-mode/v1" # 阿里云的 baseUrl
+deepseek_base_url="https://api.deepseek.com/v1" # deepseek 的 baseUrl
 
-openai_api_key= # openai 的 api key，两者可以只填一个
-aliyun_api_key= # 阿里云百炼的 api key，两者可以只填一个
+openai_api_key= # openai 的 api key，可以只填一个
+aliyun_api_key= # 阿里云百炼的 api key，可以只填一个
+deepseek_api_key= # deepseek 的 api key，可以只填一个
 
 text_llm_model=gpt-4o # 如果 text_provider 设置为 openai，这里只能填 OpenAI 的模型，如：gpt-4o。如果设置了 aliyun，可以填阿里云的大模型，如：qwen-plus 或者 qwen-max
 。
