@@ -23,7 +23,7 @@ from moviepy.video.tools.subtitles import SubtitlesClip
 from PIL import Image, ImageDraw, ImageFont
 import numpy as np
 import requests
-
+import random
 
 def wrap_text(text, max_width, font="Arial", fontsize=60):
     # Create ImageFont
@@ -227,6 +227,7 @@ async def generate_video(request: VideoGenerateRequest):
             scenes = [StoryScene(**scene) for scene in story_data.get("scenes", [])]
         else:
             req = StoryGenerationRequest(
+                resolution=request.resolution,
                 story_prompt=request.story_prompt,
                 language=request.language,
                 segments=request.segments,

@@ -86,12 +86,13 @@ class LLMService:
         else:
             raise TypeError("Input must be a dict or list of dicts")
 
-    def generate_image(self, prompt: str) -> str:
+    def generate_image(self, *, prompt: str, resolution: str = "1024x1024") -> str:
         # return "https://dashscope-result-bj.oss-cn-beijing.aliyuncs.com/1d/56/20250118/3c4cc727/4fc622b5-54a6-484c-bf1f-f1cfb66ace2d-1.png?Expires=1737290655&OSSAccessKeyId=LTAI5tQZd8AEcZX6KZV4G8qL&Signature=W8D4CN3uonQ2pL1e9xGMWufz33E%3D"
         """生成图片
 
         Args:
             prompt (str): 图片描述
+            resolution (str): 图片分辨率，默认为 1024x1024
 
         Returns:
             str: 图片URL
@@ -104,7 +105,7 @@ class LLMService:
             if settings.image_provider == "aliyun":
                 rsp = ImageSynthesis.call(model=settings.image_llm_model,
                               prompt=prompt,
-                              size='1024*1024')
+                              size=resolution,)
                 if rsp.status_code == HTTPStatus.OK:
                     # print("aliyun image response", rsp.output)
                     for result in rsp.output.results:
@@ -117,7 +118,7 @@ class LLMService:
                 response = self.image_client.images.generate(
                     model=self.image_llm_model,
                     prompt=safe_prompt,
-                    size="1024x1024",
+                    size=resolution,
                     quality="standard",
                     n=1
                 )
@@ -145,7 +146,7 @@ class LLMService:
         # 为每个场景生成图片
         for segment in story_segments:
             try:
-                image_url = self.generate_image(prompt=segment["image_prompt"])
+                image_url = self.generate_image(prompt=segment["image_prompt"], resolution=request.resolution)
                 segment["url"] = image_url
             except Exception as e:
                 logger.error(f"Failed to generate image for segment: {e}")

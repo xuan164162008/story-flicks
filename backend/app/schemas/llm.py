@@ -4,7 +4,7 @@ from app.models.const import Language
 from typing import Optional
 
 class StoryGenerationRequest(BaseModel):
-
+    resolution: Optional[str] = Field(default="1024*1024", description="分辨率")
     text_llm_provider: Optional[str] = Field(default=None, description="Text LLM provider")
     text_llm_model: Optional[str] = Field(default=None, description="Text LLM model")
     image_llm_provider: Optional[str] = Field(default=None, description="Image LLM provider")

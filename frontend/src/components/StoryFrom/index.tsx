@@ -13,6 +13,7 @@ type FieldType = {
     image_llm_provider?: string; // Image LLM provider
     text_llm_model?: string; // Text LLM model
     image_llm_model?: string; // Image LLM model
+    resolution?: string; // 分辨率
     test_mode?: boolean; // 是否为测试模式
     task_id?: string; // 任务ID，测试模式才需要
     segments: number; // 分段数量 (1-10)
@@ -84,7 +85,7 @@ const App: React.FC = () => {
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 16 }}
                 style={{ minWidth: 600, justifyContent: 'flex-start' }}
-                initialValues={{ remember: true }}
+                initialValues={{ remember: true, resolution: '1024*1024' }}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
@@ -130,6 +131,13 @@ const App: React.FC = () => {
                     rules={[{ required: true, message: t('storyForm.imgLLMModelMissMsg') }]}
                 >
                     <Input placeholder={t('storyForm.imageLLMPlaceholder')} />
+                </Form.Item>
+                <Form.Item<FieldType>
+                    label={t('storyForm.resolution')}
+                    name="resolution"
+                    rules={[{ required: true, message: t('storyForm.resolutionMissMsg') }]}
+                >
+                    <Input placeholder={t('storyForm.resolutionPlaceholder')} />
                 </Form.Item>
                 <Form.Item<FieldType>
                     label={t('storyForm.videoLanguage')}
