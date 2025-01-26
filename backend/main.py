@@ -3,6 +3,7 @@ from fastapi.staticfiles import StaticFiles
 
 from fastapi.middleware.cors import CORSMiddleware
 from app.api import api_router
+import os
 
 app = FastAPI(
     title="StoryFlicks Backend API",
@@ -19,6 +20,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+if not os.path.exists('tasks'):
+    os.makedirs('tasks')
+
 app.mount("/tasks", StaticFiles(directory="tasks"), name="tasks")
 
 # Include API router
