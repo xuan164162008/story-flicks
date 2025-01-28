@@ -85,7 +85,7 @@ class LLMService:
         else:
             raise TypeError("Input must be a dict or list of dicts")
 
-    def generate_image(self, *, prompt: str, resolution: str = "1024x1024") -> str:
+    def generate_image(self, *, prompt: str, image_llm_provider: str = None, image_llm_model: str = None, resolution: str = "1024x1024") -> str:
         # return "https://dashscope-result-bj.oss-cn-beijing.aliyuncs.com/1d/56/20250118/3c4cc727/4fc622b5-54a6-484c-bf1f-f1cfb66ace2d-1.png?Expires=1737290655&OSSAccessKeyId=LTAI5tQZd8AEcZX6KZV4G8qL&Signature=W8D4CN3uonQ2pL1e9xGMWufz33E%3D"
         """生成图片
 
@@ -97,12 +97,16 @@ class LLMService:
             str: 图片URL
         """
 
+        
+        image_llm_provider =  image_llm_provider or settings.image_provider
+        image_llm_model = image_llm_model or settings.image_llm_model
+
         try:
             # 添加安全提示词
             safe_prompt = f"Create a safe, family-friendly illustration. {prompt} The image should be appropriate for all ages, non-violent, and non-controversial."
             
-            if settings.image_provider == "aliyun":
-                rsp = ImageSynthesis.call(model=settings.image_llm_model,
+            if image_llm_provider == "aliyun":
+                rsp = ImageSynthesis.call(model=image_llm_model,
                               prompt=prompt,
                               size=resolution,)
                 if rsp.status_code == HTTPStatus.OK:
@@ -113,9 +117,9 @@ class LLMService:
                     error_message = f'Failed, status_code: {rsp.status_code}, code: {rsp.code}, message: {rsp.message}'
                     logger.error(error_message)
                     raise Exception(error_message)
-            elif settings.image_provider == "openai":
+            elif image_llm_provider == "openai":
                 response = self.image_client.images.generate(
-                    model=self.image_llm_model,
+                    model=image_llm_model,
                     prompt=safe_prompt,
                     size=resolution,
                     quality="standard",
@@ -145,7 +149,7 @@ class LLMService:
         # 为每个场景生成图片
         for segment in story_segments:
             try:
-                image_url = self.generate_image(prompt=segment["image_prompt"], resolution=request.resolution)
+                image_url = self.generate_image(prompt=segment["image_prompt"], resolution=request.resolution, image_llm_provider=request.image_llm_provider, image_llm_model=request.image_llm_model)
                 segment["url"] = image_url
             except Exception as e:
                 logger.error(f"Failed to generate image for segment: {e}")
