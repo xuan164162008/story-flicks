@@ -122,9 +122,18 @@ async def create_video_with_scenes(task_dir: str, scenes: List[StoryScene], voic
                     
             # 创建图片剪辑
             image_clip = ImageClip(image_file)
+            origin_image_w, origin_image_h = image_clip.size  # 获取放大后的图片尺寸
+            image_scale = 1.2
+            image_clip = image_clip.resized((origin_image_w*image_scale,origin_image_h*image_scale))
+            image_w, image_h = image_clip.size  # 获取放大后的图片尺寸
             # 确保图片视频时长至少和字幕一样长
             image_clip = image_clip.with_duration(subtitle_duration)
-                    
+
+            width_diff = origin_image_w * (image_scale-1)
+            def debug_position(t):
+                # print(f"当前时间 t = {t}", subtitle_duration, width_diff, width_diff/subtitle_duration*t)  # 输出当前时间
+                return (-width_diff/subtitle_duration*t, 'center')
+            image_clip = image_clip.with_position(debug_position)
             # 创建音频剪辑
             audio_clip = AudioFileClip(audio_file)
             image_clip = image_clip.with_audio(audio_clip)
@@ -149,7 +158,7 @@ async def create_video_with_scenes(task_dir: str, scenes: List[StoryScene], voic
                         )
                     def create_text_clip(subtitle_item):
                         phrase = subtitle_item[1]
-                        max_width = (image_clip.w * 0.9)
+                        max_width = (origin_image_w * 0.9)
                         wrapped_txt, txt_height = wrap_text(
                             phrase, max_width=max_width, font=font_path, fontsize=60
                         )
@@ -165,7 +174,7 @@ async def create_video_with_scenes(task_dir: str, scenes: List[StoryScene], voic
                         _clip = _clip.with_start(subtitle_item[0][0])
                         _clip = _clip.with_end(subtitle_item[0][1])
                         _clip = _clip.with_duration(duration)
-                        _clip = _clip.with_position(("center", image_clip.h * 0.95 - _clip.h - 50))
+                        _clip = _clip.with_position(("center", origin_image_h * 0.95 - _clip.h - 50))
                         return _clip
                     
                     sub = SubtitlesClip(subtitle_file, encoding="utf-8", make_textclip=make_textclip)
@@ -174,7 +183,7 @@ async def create_video_with_scenes(task_dir: str, scenes: List[StoryScene], voic
                     for item in sub.subtitles:
                         clip = create_text_clip(subtitle_item=item)
                         text_clips.append(clip)
-                    video_clip = CompositeVideoClip([image_clip, *text_clips])
+                    video_clip = CompositeVideoClip([image_clip, *text_clips], (origin_image_w, origin_image_h))
                     clips.append(video_clip)
                     logger.info(f"Added subtitles for scene {i}")
                 except Exception as e:
