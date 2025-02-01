@@ -26,6 +26,9 @@ class StoryGenerationResponse(BaseModel):
 
 class ImageGenerationRequest(BaseModel):
     prompt: str = Field(..., min_length=1, max_length=4000, description="Description of the image to generate")
+    image_llm_provider: Optional[str] = Field(default=None, description="Image LLM provider")
+    image_llm_model: Optional[str] = Field(default=None, description="Image LLM model")
+    resolution: Optional[str] = Field(default="1024*1024", description="Image resolution")
 
 
 class ImageGenerationResponse(BaseModel):

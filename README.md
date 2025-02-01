@@ -11,14 +11,14 @@ The backend technology stack consists of Python + FastAPI framework, while the f
 <table>
 <thead>
 <tr>
-<th align="center"><g-emoji class="g-emoji" alias="arrow_forward">▶️</g-emoji> The Story of the Big Gray Wolf and the Little White Rabbit</th>
 <th align="center"><g-emoji class="g-emoji" alias="arrow_forward">▶️</g-emoji> The Story of the Rabbit and the Little Fox</th>
+<th align="center"><g-emoji class="g-emoji" alias="arrow_forward">▶️</g-emoji> The Story of the Big Gray Wolf and the Little White Rabbit</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td align="center"><video src="https://github.com/user-attachments/assets/e1893b9c-83ed-420c-a29a-1f5f878117c4"></video></td>
 <td align="center"><video src="https://github.com/user-attachments/assets/8868e1b5-a931-4d25-9762-859a4c32d4f4"></video></td>
-<td align="center"><video src="https://github.com/user-attachments/assets/4585c59c-966a-40c7-97d0-505fbe00cf4f"></video></td>
 </tr>
 </tbody>
 </table>
