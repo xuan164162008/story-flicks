@@ -16,11 +16,13 @@ class Settings(BaseSettings):
     openai_base_url: str = "https://api.openai.com/v1"
     aliyun_base_url: str = "https://dashscope.aliyuncs.com/compatible-mode/v1"
     deepseek_base_url: str = "https://api.deepseek.com/v1"
+    ollama_base_url: str = "http://localhost:11434/v1"
 
     # api key
     openai_api_key: str = ""
     aliyun_api_key: str = ""
     deepseek_api_key: str = ""
+    ollama_api_key: str = ""
 
     text_llm_model: str = "gpt-4o"
     image_llm_model: str = "dall-e-3"

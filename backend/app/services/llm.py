@@ -28,7 +28,8 @@ if settings.aliyun_api_key:
     aliyun_text_client = OpenAI(base_url=settings.aliyun_base_url or "https://dashscope.aliyuncs.com/compatible-mode/v1", api_key=settings.aliyun_api_key) 
 if settings.deepseek_api_key:
     deepseek_client = OpenAI(api_key=settings.deepseek_api_key, base_url=settings.deepseek_base_url or "https://api.deepseek.com/v1")
-
+if settings.ollama_api_key:
+    ollama_client = OpenAI(api_key=settings.ollama_api_key, base_url=settings.ollama_base_url or "http://localhost:11434/v1")
 
 class LLMService:
     def __init__(self):
@@ -168,6 +169,8 @@ class LLMService:
             imgLLMList.append("aliyun")
         if settings.deepseek_api_key:
             textLLMList.append("deepseek")
+        if settings.ollama_api_key:
+            textLLMList.append("ollama")
         return { "textLLMProviders": textLLMList, "imageLLMProviders": imgLLMList }
 
     def _validate_story_response(self, response: any) -> None:
@@ -219,6 +222,8 @@ class LLMService:
             text_client = self.openai_client
         elif text_llm_provider == "deepseek":
             text_client = deepseek_client
+        elif text_llm_provider == "ollama":
+            text_client = ollama_client
         if text_llm_model == None:
             text_llm_model = settings.text_llm_model
         response = text_client.chat.completions.create(

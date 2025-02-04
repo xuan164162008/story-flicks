@@ -50,13 +50,14 @@ image_provider="aliyun"   # The image generation model provider. Currently, only
 openai_base_url="https://api.openai.com/v1" # The base URL for OpenAI
 aliyun_base_url="https://dashscope.aliyuncs.com/compatible-mode/v1" # The base URL for Aliyun
 deepseek_base_url="https://api.deepseek.com/v1" # The base URL for DeepSeek
+ollama_base_url="http://localhost:11434/v1" # The base URL for Ollama
 
 openai_api_key= # The API key for OpenAI, only one key needs to be provided
 aliyun_api_key= # The API key for Aliyun Bailian, only one key needs to be provided
-deepseek_api_key= # The API key for DeepSeek, only one key needs to be provided
+deepseek_api_key= # The API key for DeepSeek, currently only text generation is supported
+ollama_api_key= # If you need to use it, please set api_key to “ollama”. Currently, this API key only supports text generation and cannot be used with models that have too few parameters. It is recommended to use qwen2.5:14b or a larger model.
 
-
-text_llm_model=gpt-4o # If text_provider is set to openai, only OpenAI models can be used, such as gpt-4o. If aliyun is selected, Aliyun models like qwen-plus or qwen-max can be used.
+text_llm_model=gpt-4o # If text_provider is set to openai, only OpenAI models can be used, such as gpt-4o. If aliyun is selected, Aliyun models like qwen-plus or qwen-max can be used. Ollama models cannot be used with models that have too few parameters. It is recommended to use qwen2.5:14b or a larger model.
 
 image_llm_model=flux-dev # If image_provider is set to openai, only OpenAI models can be used, such as dall-e-3. If aliyun is selected, Aliyun models like flux-dev are recommended, which are currently available for free trial. More details: https://help.aliyun.com/zh/model-studio/getting-started/models#a1a9f05a675m4.
 ```
