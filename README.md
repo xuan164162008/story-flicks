@@ -29,16 +29,17 @@ The backend technology stack consists of Python + FastAPI framework, while the f
 
 ## Usage Instructions
 
-1. Download the project
+### 1. Download the project
 
 ```
 git clone https://github.com/alecm20/story-flicks.git
 ```
 
-2. Set model information
+### 2. Set model information
 
 ```
-# First, switch to the project root directory
+# First, switch to the project’s backend directory first.
+cd backend
 cp .env.example .env
 
 
@@ -62,7 +63,11 @@ text_llm_model=gpt-4o # If text_provider is set to openai, only OpenAI models ca
 image_llm_model=flux-dev # If image_provider is set to openai, only OpenAI models can be used, such as dall-e-3. If aliyun is selected, Aliyun models like flux-dev are recommended, which are currently available for free trial. More details: https://help.aliyun.com/zh/model-studio/getting-started/models#a1a9f05a675m4.
 ```
 
-3. Start the backend project
+### 3. Start the project
+
+#### 3.1 Manual Startup
+
+**Start the backend project**
 
 ```
 # First, switch to the project root directory
@@ -83,7 +88,7 @@ INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 ```
 
-4. Start the frontend project
+**Start the frontend project**
 
 ```
 # First, switch to the project root directory
@@ -104,6 +109,16 @@ When successfully started, the following output will appear:
   ➜  press h + enter to show help
 ```
 
-5. Get started
+#### 3.2 Start via Docker
+
+In the project root directory, run:
+
+```
+docker-compose up --build
+```
+
+Once successful, open the frontend project at: http://localhost:5173/
+
+### 4. Get started
 
 Based on the fields in the interface, select the text generation model provider, image generation model provider, text model, image model, video language, voice, story theme, and story segments. Then click “Generate” to create the video. The number of images generated will correspond to the number of segments specified, with one image per segment. The more segments you set, the longer it will take to generate the video. Once the generation is successful, the video will be displayed on the frontend page.

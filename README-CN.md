@@ -8,7 +8,6 @@
 项目后端技术栈为 python + fastapi 框架，前端为 react + antd + vite。
 
 
-
 ## 视频演示
 
 <table>
@@ -33,16 +32,18 @@
 
 ## 使用说明
 
-1. 下载本项目
+### 1. 下载本项目
 
 ```
 git clone https://github.com/alecm20/story-flicks.git
 ```
 
-2. 设置模型信息
+### 2. 设置模型信息
 
 ```
-# 先切换到项目根目录
+# 先切换到项目的 backend 目录下
+cd backend
+
 cp .env.example .env
 
 
@@ -63,10 +64,13 @@ text_llm_model=gpt-4o # 如果 text_provider 设置为 openai，这里只能填 
 
 image_llm_model=flux-dev # 如果 image_provider 设置为 openai，这里只能填 OpenAI 的模型，如：dall-e-3。如果设置了 aliyun，可以填阿里云的大模型，阿里云推荐使用：flux-dev，目前可以免费试用，具体参考：https://help.aliyun.com/zh/model-studio/getting-started/models#a1a9f05a675m4。
 
-
 ```
 
-3. 启动后端项目
+### 3. 启动项目
+
+#### 3.1 手动启动
+
+**启动后端项目**
 
 ```
 # 先切换到项目根目录
@@ -87,7 +91,7 @@ INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 ```
 
-4. 启动前端项目
+**启动前端项目**
 
 ```
 # 先切换到项目根目录
@@ -107,6 +111,14 @@ npm run dev
   ➜  press h + enter to show help
 ```
 
-5. 开始使用
+#### 3.2 通过docker启动
+
+在项目根目录下，执行：
+```
+docker-compose up --build
+```
+成功之后打开前端项目：http://localhost:5173/
+
+### 4. 开始使用
 
 根据界面中的字段，选择文本生成模型提供商、图片生成模型提供商、文本模型、图片生成模型、视频语言、声音、故事主题、故事段落，然后点击生成，即可生成视频。根据填写的段落数量，生成图片，一个段落生成一张图片，设置的段落越多，生成视频的耗时也会更久。如果成功之后，视频会展示在前端页面中。
