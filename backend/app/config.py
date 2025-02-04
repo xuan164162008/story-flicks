@@ -28,7 +28,8 @@ class Settings(BaseSettings):
     image_llm_model: str = "dall-e-3"
 
     class Config:
-        env_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env")
+        env_file = ".env"
+        # env_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env")
 
 @lru_cache()
 def get_settings() -> Settings:
