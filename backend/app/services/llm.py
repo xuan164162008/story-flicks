@@ -37,7 +37,7 @@ class LLMService:
         self.text_llm_model = settings.text_llm_model
         self.image_llm_model = settings.image_llm_model
     
-    def generate_story(self, request: StoryGenerationRequest) -> List[Dict[str, Any]]:
+    async def generate_story(self, request: StoryGenerationRequest) -> List[Dict[str, Any]]:
         """生成故事场景
         Args:
             story_prompt (str, optional): 故事提示. Defaults to None.
@@ -49,10 +49,10 @@ class LLMService:
         
         messages = [
             {"role": "system", "content": "你是一个专业的故事创作者，善于创作引人入胜的故事。请只返回JSON格式的内容。"},
-            {"role": "user", "content": self._get_story_prompt(request.story_prompt, request.language, request.segments)}
+            {"role": "user", "content": await self._get_story_prompt(request.story_prompt, request.language, request.segments)}
         ]
         logger.info(f"prompt messages: {json.dumps(messages, indent=4, ensure_ascii=False)}")
-        response = self._generate_response(text_llm_provider = request.text_llm_provider or None, text_llm_model = request.text_llm_model or None, messages=messages, response_format="json_object")
+        response = await self._generate_response(text_llm_provider = request.text_llm_provider or None, text_llm_model = request.text_llm_model or None, messages=messages, response_format="json_object")
         response = response["list"]
         response = self.normalize_keys(response)
 
@@ -131,7 +131,7 @@ class LLMService:
             logger.error(f"Failed to generate image: {e}")
             return ""
 
-    def generate_story_with_images(self, request: StoryGenerationRequest) -> List[Dict[str, Any]]:
+    async def generate_story_with_images(self, request: StoryGenerationRequest) -> List[Dict[str, Any]]:
         """生成故事和配图
         Args:
             story_prompt (str, optional): 故事提示. Defaults to None.
@@ -142,7 +142,7 @@ class LLMService:
             List[Dict[str, Any]]: 故事场景列表，每个场景包含文本、图片提示词和图片URL
         """
         # 先生成故事
-        story_segments = self.generate_story(
+        story_segments = await self.generate_story(
             request,
         )
 
@@ -198,7 +198,7 @@ class LLMService:
             if not isinstance(scene["image_prompt"], str):
                 raise LLMResponseValidationError(f"Scene {i} 'image_prompt' must be a string")
 
-    def _generate_response(self, *, text_llm_provider: str = None, text_llm_model: str = None, messages: List[Dict[str, str]], response_format: str = "json_object") -> any:
+    async def _generate_response(self, *, text_llm_provider: str = None, text_llm_model: str = None, messages: List[Dict[str, str]], response_format: str = "json_object") -> any:
         """生成 LLM 响应
 
         Args:
@@ -234,7 +234,7 @@ class LLMService:
             logger.error(f"Failed to parse response: {e}")
             raise e
 
-    def _get_story_prompt(self, story_prompt: str = None, language: Language = Language.CHINESE_CN, segments: int = 3) -> str:
+    async def _get_story_prompt(self, story_prompt: str = None, language: Language = Language.CHINESE_CN, segments: int = 3) -> str:
         """生成故事提示词
 
         Args:

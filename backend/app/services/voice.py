@@ -1108,7 +1108,7 @@ async def generate_voice(text: str, voice_name: str, voice_rate: float = 0, audi
     sub_maker = await edge_tts_voice(text, voice_name, audio_file, voice_rate)
     # 生成字幕
     if sub_maker:
-        generate_subtitle(sub_maker, text, subtitle_file)
+        await generate_subtitle(sub_maker, text, subtitle_file)
     else:
         logger.error("Failed to generate sub_maker")
     
@@ -1146,7 +1146,7 @@ async def edge_tts_voice(text: str, voice_name: str, voice_file: str, voice_rate
     return None
 
 
-def generate_subtitle(sub_maker: edge_tts.SubMaker, text: str, subtitle_file: str):
+async def generate_subtitle(sub_maker: edge_tts.SubMaker, text: str, subtitle_file: str):
     """生成字幕文件"""
     try:
         if not sub_maker or not hasattr(sub_maker, "subs") or not sub_maker.subs:
@@ -1156,7 +1156,7 @@ def generate_subtitle(sub_maker: edge_tts.SubMaker, text: str, subtitle_file: st
         print(f"Generating subtitles with {len(sub_maker.subs)} items")
         
         # 直接使用创建字幕的函数
-        create_subtitle(sub_maker=sub_maker, text=text, subtitle_file=subtitle_file)
+        await create_subtitle(sub_maker=sub_maker, text=text, subtitle_file=subtitle_file)
             
     except Exception as e:
         print(f"failed to generate subtitle: {str(e)}")
@@ -1186,7 +1186,7 @@ def _format_text(text: str) -> str:
 
 
 
-def create_subtitle(sub_maker: edge_tts.SubMaker, text: str, subtitle_file: str):
+async def create_subtitle(sub_maker: edge_tts.SubMaker, text: str, subtitle_file: str):
     """
     优化字幕文件
     1. 将字幕文件按照标点符号分割成多行

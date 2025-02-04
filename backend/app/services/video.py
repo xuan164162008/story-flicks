@@ -245,7 +245,7 @@ async def generate_video(request: VideoGenerateRequest):
                 image_llm_provider=request.image_llm_provider,
                 image_llm_model=request.image_llm_model
             )
-            story_list = llm_service.generate_story_with_images(request=req)
+            story_list = await llm_service.generate_story_with_images(request=req)
             scenes = [StoryScene(text=scene["text"], image_prompt=scene["image_prompt"], url=scene["url"]) for scene in story_list]
             
             # 保存 story.json

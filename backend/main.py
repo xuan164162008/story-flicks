@@ -24,8 +24,7 @@ app.add_middleware(
 if not os.path.exists('tasks'):
     os.makedirs('tasks')
 
-app.mount("/tasks", StaticFiles(directory="tasks"), name="tasks")
-
+app.mount("/tasks", StaticFiles(directory=os.path.abspath("tasks")), name="tasks")
 # Include API router
 app.include_router(api_router)
 

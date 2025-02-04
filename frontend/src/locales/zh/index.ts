@@ -18,6 +18,7 @@ export default {
         voiceName: '语音名称',
         textPrompt: '故事主题',
         segments: '故事分段，1-10',
+        submit: '生成故事',
         txtLLMProviderMissMsg: '请输入文本 LLM 提供商',
         imgLLMProviderMissMsg: '请输入图像 LLM 提供商',
         txtLLMModelMissMsg: '请输入文本 LLM 模型',

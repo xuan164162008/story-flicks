@@ -18,6 +18,7 @@ export default {
         voiceName: 'Voice Name',
         textPrompt: 'Story Topic',
         segments: 'Story Segments, 1-10',
+        submit: 'Generate',
         txtLLMProviderMissMsg: 'Please input Text LLM Provider',
         imgLLMProviderMissMsg: 'Please input Image LLM Provider',
         txtLLMModelMissMsg: 'Please input Text LLM Model',

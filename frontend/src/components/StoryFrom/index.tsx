@@ -187,7 +187,7 @@ const App: React.FC = () => {
                 </Form.Item>
                 <Form.Item label={null}>
                     <Button type="primary" htmlType="submit">
-                        Submit
+                        {t('storyForm.submit')}
                     </Button>
                 </Form.Item>
             </Form>
