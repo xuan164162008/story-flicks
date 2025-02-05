@@ -7,6 +7,7 @@ from http import HTTPStatus
 from pathlib import PurePosixPath
 import requests
 from urllib.parse import urlparse, unquote
+import random
 
 from app.models.const import LANGUAGE_NAMES, Language
 from app.exceptions import LLMResponseValidationError
@@ -30,6 +31,8 @@ if settings.deepseek_api_key:
     deepseek_client = OpenAI(api_key=settings.deepseek_api_key, base_url=settings.deepseek_base_url or "https://api.deepseek.com/v1")
 if settings.ollama_api_key:
     ollama_client = OpenAI(api_key=settings.ollama_api_key, base_url=settings.ollama_base_url or "http://localhost:11434/v1")
+if settings.siliconflow_api_key:
+    siliconflow_client = OpenAI(api_key=settings.siliconflow_api_key, base_url=settings.siliconflow_base_url or "https://api.siliconflow.cn/v1")
 
 class LLMService:
     def __init__(self):
@@ -128,6 +131,27 @@ class LLMService:
                 )
                 logger.info("image generate res", response.data[0].url)
                 return response.data[0].url
+            elif image_llm_provider == "siliconflow":
+                if (resolution != None):
+                    resolution = resolution.replace("*", "x")
+                payload = {
+                    "model": image_llm_model,
+                    "prompt": safe_prompt,
+                    "seed": random.randint(1000000, 4999999999),
+                    "image_size": resolution,
+                    "guidance_scale": 7.5,
+                    "batch_size": 1,
+                }
+                headers = {
+                    "Authorization": "Bearer " + settings.siliconflow_api_key,
+                    "Content-Type": "application/json"
+                }
+                response = requests.request("POST", "https://api.siliconflow.cn/v1/images/generations", json=payload, headers=headers)
+                if response.text != None:
+                    response = json.loads(response.text)
+                    return response["images"][0]["url"]
+                else:
+                    raise Exception(response.text)
         except Exception as e:
             logger.error(f"Failed to generate image: {e}")
             return ""
@@ -171,6 +195,9 @@ class LLMService:
             textLLMList.append("deepseek")
         if settings.ollama_api_key:
             textLLMList.append("ollama")
+        if settings.siliconflow_api_key:
+            textLLMList.append("siliconflow")
+            imgLLMList.append("siliconflow")
         return { "textLLMProviders": textLLMList, "imageLLMProviders": imgLLMList }
 
     def _validate_story_response(self, response: any) -> None:
@@ -224,6 +251,8 @@ class LLMService:
             text_client = deepseek_client
         elif text_llm_provider == "ollama":
             text_client = ollama_client
+        elif text_llm_provider == "siliconflow":
+            text_client = siliconflow_client
         if text_llm_model == None:
             text_llm_model = settings.text_llm_model
         response = text_client.chat.completions.create(

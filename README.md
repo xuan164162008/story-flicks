@@ -49,14 +49,25 @@ text_provider="openai"    # The text generation model provider. Currently suppor
 image_provider="aliyun"   # The image generation model provider. Currently, only openai and aliyun are supported.
 
 openai_base_url="https://api.openai.com/v1" # The base URL for OpenAI
+
 aliyun_base_url="https://dashscope.aliyuncs.com/compatible-mode/v1" # The base URL for Aliyun
+
 deepseek_base_url="https://api.deepseek.com/v1" # The base URL for DeepSeek
+
 ollama_base_url="http://localhost:11434/v1" # The base URL for Ollama
 
+siliconflow_base_url="https://api.siliconflow.cn/v1" # The base URL for SiliconFlow
+
 openai_api_key= # The API key for OpenAI, only one key needs to be provided
+
 aliyun_api_key= # The API key for Aliyun Bailian, only one key needs to be provided
+
 deepseek_api_key= # The API key for DeepSeek, currently only text generation is supported
+
 ollama_api_key= # If you need to use it, please set api_key to “ollama”. Currently, this API key only supports text generation and cannot be used with models that have too few parameters. It is recommended to use qwen2.5:14b or a larger model.
+
+siliconflow_api_key= # The API key for SiliconFlow, siliconflow's text model currently only supports large models compatible with the OpenAI format, such as Qwen/Qwen2.5-7B-Instruct. The image model has only been tested with black-forest-labs/FLUX.1-dev.
+
 
 text_llm_model=gpt-4o # If text_provider is set to openai, only OpenAI models can be used, such as gpt-4o. If aliyun is selected, Aliyun models like qwen-plus or qwen-max can be used. Ollama models cannot be used with models that have too few parameters. It is recommended to use qwen2.5:14b or a larger model.
 
