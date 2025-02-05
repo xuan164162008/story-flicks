@@ -4,6 +4,7 @@ from app.services.video import generate_video, create_video_with_scenes, generat
 from app.schemas.video import VideoGenerateRequest, VideoGenerateResponse, StoryScene
 import os
 import json
+from app.utils.utils import extract_id
 
 router = APIRouter()
 
@@ -14,8 +15,9 @@ async def generate_video_endpoint(
     """生成视频"""
     try:
         video_file = await generate_video(request)
+        task_id = extract_id(video_file)
         # 转换为相对路径
-        video_url = "http://127.0.0.1:8000/tasks/" + video_file.split("/tasks/")[-1]
+        video_url = "http://127.0.0.1:8000/tasks/" + task_id + "/video.mp4"
         return VideoGenerateResponse(
             success=True,
             data={"video_url": video_url}

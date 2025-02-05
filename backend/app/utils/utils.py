@@ -8,6 +8,7 @@ import threading
 import urllib3
 from typing import Any, List
 from uuid import uuid4
+from pathlib import Path
 
 from loguru import logger
 
@@ -231,6 +232,17 @@ def load_locales(i18n_dir):
 def parse_extension(filename):
     return os.path.splitext(filename)[1].strip().lower().replace(".", "")
 
-import os
+def extract_id(video_file: str) -> str:
+    """
+    从路径中提取 ID（tasks 目录下的第一级子目录名）
+    兼容 Windows 和 Linux
+    """
+    path = Path(video_file)
 
-
+    # 遍历路径的所有部分，查找 "tasks" 目录
+    try:
+        parts = path.parts
+        index = parts.index("tasks")  # 找到 "tasks" 目录的位置
+        return parts[index + 1]  # 返回紧跟其后的部分作为 ID
+    except (ValueError, IndexError):
+        raise ValueError(f"Invalid path format: {video_file}")
