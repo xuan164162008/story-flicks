@@ -47,9 +47,9 @@ cd backend
 cp .env.example .env
 
 
-text_provider="openai"    # 文本生成模型的提供商，目前支持 openai和 aliyun、deepseek，阿里云文档：https://www.aliyun.com/product/bailian
+text_provider="openai"    # 文本生成模型的提供商，目前支持 openai和 aliyun、deepseek、ollama、siliconflow，阿里云文档：https://www.aliyun.com/product/bailian
 
-image_provider="aliyun"   # 图片生成模型的提供商，目前只支持 openai和 aliyun
+image_provider="aliyun"   # 图片生成模型的提供商，目前支持 openai和 aliyun、siliconflow
 
 openai_base_url="https://api.openai.com/v1" # openai 的 baseUrl
 

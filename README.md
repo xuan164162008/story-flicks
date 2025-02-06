@@ -43,10 +43,10 @@ cd backend
 cp .env.example .env
 
 
-text_provider="openai"    # The text generation model provider. Currently supports openai, aliyun, and deepseek. 
+text_provider = "openai"  # Provider of the text generation model. Currently supports openai, aliyun, deepseek, ollama, and siliconflow.  
                           # Aliyun documentation: https://www.aliyun.com/product/bailian
-                          
-image_provider="aliyun"   # The image generation model provider. Currently, only openai and aliyun are supported.
+
+image_provider = "aliyun"  # Provider of the image generation model. Currently supports openai, aliyun, and siliconflow.
 
 openai_base_url="https://api.openai.com/v1" # The base URL for OpenAI
 
