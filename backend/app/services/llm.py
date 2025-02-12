@@ -122,7 +122,9 @@ class LLMService:
                     logger.error(error_message)
                     raise Exception(error_message)
             elif image_llm_provider == "openai":
-                response = self.image_client.images.generate(
+                if (resolution != None):
+                    resolution = resolution.replace("*", "x")
+                response = self.openai_client.images.generate(
                     model=image_llm_model,
                     prompt=safe_prompt,
                     size=resolution,
